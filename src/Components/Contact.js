@@ -143,8 +143,8 @@ function Contact({ embedded = false }) {
             </section>
             )}
 
-            <section className="w3l-contact-1 pb-5" id="contact">
-                <div className="contacts-9 py-lg-5 py-md-4">
+           <section className={`w3l-contact-1${embedded ? " contact-embedded" : " pb-5"}`} id="contact">
+                <div className={embedded ? "contacts-9 py-3" : "contacts-9 py-lg-5 py-md-4"}>
                     <div className="container">
                         <div className="d-grid contact-view">
 
@@ -283,7 +283,7 @@ function Contact({ embedded = false }) {
                                         <span style={errorStyle}>{errors.message}</span>
                                     )}
 
-                                    <div className="text-right">
+                                    <div>
                                         <br/>
                                      <div 
                                 className="g-recaptcha" 
@@ -317,7 +317,10 @@ function Contact({ embedded = false }) {
                         </div>
                     </div>
                 </div>
-                <br /><br />
+               
+                {!embedded && (
+                    <>
+                     <br /><br />
                 <div className="map-iframe">
                     <iframe
                         title="mapiframe"
@@ -329,6 +332,8 @@ function Contact({ embedded = false }) {
                         allowFullScreen=""
                     ></iframe>
                 </div>
+                </>
+                )}
             </section>
         </>
     );
