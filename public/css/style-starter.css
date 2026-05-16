@@ -534,6 +534,12 @@ pre {
   .container, .container-sm {
     max-width: 540px; } }
 
+@media (max-width: 650px){
+     .mem-update-btn{
+       width: 100% !important;
+}
+}
+
 @media (min-width: 768px) {
   .container, .container-sm, .container-md {
     max-width: 720px; } }
