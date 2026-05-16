@@ -15413,6 +15413,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     margin-top: 5px;
     font-size: 16px !important;
   }
+  .mem-update-btn{
+         font-size: 16px !important;
+  }
 
   .sd-course-thumb img {
          height: 180px !important;
