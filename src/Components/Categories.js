@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useFetchCategories from "../hooks/useFetchCategories";
 
 function Categories() {
     const { allcat = [], fetchCategories } = useFetchCategories();
+    const [loading, setLoading] = useState(true);
 
     // Page title
     useEffect(() => {
@@ -23,6 +24,9 @@ function Categories() {
             } catch (err) {
                 console.log("Category fetch error:", err?.message || err);
             }
+            finally {
+            setLoading(false);
+        }
         };
 
         if (isMounted) loadData();
@@ -31,6 +35,18 @@ function Categories() {
             isMounted = false;
         };
     }, [fetchCategories]);
+
+    if (loading) return  <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh"
+        }}
+      >
+        <div className="spinner-border text-primary" role="status"></div>
+      </div>;
+
     return (
         <>
             <section className="w3l-breadcrumb">
