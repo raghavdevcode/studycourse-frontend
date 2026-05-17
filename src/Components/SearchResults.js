@@ -9,6 +9,7 @@ function SearchResults() {
   const stext = params.get("s") || "";
   const [subcats, setSubcats] = useState([]);
   const [searched, setSearched] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   async function searchAll() {
     try {
@@ -25,6 +26,7 @@ function SearchResults() {
       setSubcats([]);
     } finally {
       setSearched(true);
+      setLoading(false)
     }
   }
 
@@ -33,6 +35,7 @@ function SearchResults() {
     if (!stext) {
       setSubcats([]);
       setSearched(true);
+      setLoading(false)
       return;
     }
 
@@ -40,8 +43,19 @@ function SearchResults() {
     searchAll();
   }, [stext]);
 
+   if (loading) return  <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh"
+        }}
+      >
+        <div className="spinner-border text-primary" role="status"></div>
+      </div>;
   if (!searched) return null;
   if (subcats.length === 0) return <ErrorPage />;
+ 
 
   return (
     <>
