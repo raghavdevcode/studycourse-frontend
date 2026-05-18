@@ -194,26 +194,30 @@ function Details({ lessonId, onBack }) {
   const isLocked = courseinfo?.isLocked;
   const subcatId = courseinfo?.subcatId;
 
-  function handleWatchNow() {
-    if (!udata?.isLoggedIn) {
-      toast.warn("Please login to watch this lesson");
-      sessionStorage.setItem("lid", courseid);
-      navigate("/login");
-      return;
-    }
+function handleWatchNow() {
 
-    if (isLocked) {
-      navigate(
-        `/payment?scid=${subcatId}&name=${encodeURIComponent(
-          courseinfo?.subcatName || "Course"
-        )}`
-      );
-      return;
-    }
-
+  // If lesson not locked — free preview runs without login
+  if (!isLocked) {
     if (youtubeId) setShowModal(true);
     else toast.warn("Video not available");
+    return;
   }
+
+  // Locked lesson — first login check
+  if (!udata?.isLoggedIn) {
+    toast.warn("Please login to enroll");
+    sessionStorage.setItem("lid", courseid);
+    navigate("/login");
+    return;
+  }
+
+  // If Logged in  but not enrolled  — redirect to payment page
+  navigate(
+    `/payment?scid=${subcatId}&name=${encodeURIComponent(
+      courseinfo?.subcatName || "Course"
+    )}`
+  );
+}
 
   async function markAsWatched() {
     try {
