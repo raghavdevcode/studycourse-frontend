@@ -71,7 +71,7 @@ function Lessons({ scid, name, onBack, onLessonClick, onPay }) {
   // ---------------- HANDLERS ----------------
   function handleLockedClick() {
     if (!udata?.isLoggedIn) {
-      toast.warn("Please login first");
+      toast.warn("Please login to enroll");
       navigate("/login");
       return;
     }
