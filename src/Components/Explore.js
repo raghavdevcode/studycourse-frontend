@@ -1,16 +1,38 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useFetchCategories from "../hooks/useFetchCategories";
 
 function Explore({ onCategoryClick }) {
   const { allcat = [], fetchCategories } = useFetchCategories();
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     document.title = "Explore - Study Course";
   }, []);
 
 useEffect(() => {
-  fetchCategories();
+    let isMounted = true;
+
+    const loadData = async () => {
+        try {
+            if (typeof fetchCategories === "function") {
+                await fetchCategories();
+            }
+        } catch (err) {
+            console.log("Category fetch error:", err?.message || err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (isMounted) loadData();
+
+    return () => { isMounted = false; };
 }, [fetchCategories]);
+
+if (loading) return (
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+        <div className="spinner-border text-primary" role="status"></div>
+    </div>
+);
 
   return (
     <>
