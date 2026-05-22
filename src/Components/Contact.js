@@ -18,7 +18,7 @@ function Contact({ embedded = false }) {
     const [loading, setLoading] = useState(false);
     const SITE_KEY = "6LcU4NgsAAAAAEsrgnHS7c0vlcAxJYTFFsbdmFBi"
 
-      // Load reCAPTCHA v2 script
+    // Load reCAPTCHA v2 script
     useEffect(() => {
         const script = document.createElement("script")
         script.src = "https://www.google.com/recaptcha/api.js"
@@ -69,11 +69,10 @@ function Contact({ embedded = false }) {
 
         // Get captcha token from widget
         const token = window.grecaptcha.getResponse()
-        if(!token)
-                    {
-                        toast.info("Please complete captcha verification")
-                        return
-                    }
+        if (!token) {
+            toast.info("Please complete captcha verification")
+            return
+        }
 
         settouched({ name: true, email: true, phone: true, message: true });
 
@@ -88,7 +87,7 @@ function Contact({ embedded = false }) {
         setLoading(true);
 
         try {
-            const apidata = { name, email, phone, message, captcha: token};
+            const apidata = { name, email, phone, message, captcha: token };
 
             const apiresp = await api.post("/api/contactus", apidata);
 
@@ -122,28 +121,28 @@ function Contact({ embedded = false }) {
     return (
         <>
             {!embedded && (
-            <section className="w3l-breadcrumb">
-                <div className="breadcrumb-bg breadcrumb-bg-about py-2">
-                  <div className="container pt-3 pb-5 p-lg-4 pt-lg-5">
-                        <h2 className="title mt-5 pt-lg-5 pt-sm-3" style={{cursor:"context-menu"}}>Get in touch</h2>
-                        <ul className="breadcrumbs-custom-path pb-sm-5 pb-4 mt-2 text-center mb-md-5">
-                            <Link to="/" className="breadcrumb-homelink">Home</Link>
-                            <li className="active" style={{cursor:"context-menu"}}> / Contact us </li>
-                        </ul>
+                <section className="w3l-breadcrumb">
+                    <div className="breadcrumb-bg breadcrumb-bg-about py-2">
+                        <div className="container pt-3 pb-5 p-lg-4 pt-lg-5">
+                            <h2 className="title mt-5 pt-lg-5 pt-sm-3" style={{ cursor: "context-menu" }}>Get in touch</h2>
+                            <ul className="breadcrumbs-custom-path pb-sm-5 pb-4 mt-2 text-center mb-md-5">
+                                <Link to="/" className="breadcrumb-homelink">Home</Link>
+                                <li className="active" style={{ cursor: "context-menu" }}> / Contact us </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div className="waveWrapper waveAnimation">
-                    <svg viewBox="0 0 500 150" preserveAspectRatio="none">
-                        <path
-                            d="M-5.07,73.52 C149.99,150.00 299.66,-102.13 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"
-                            style={{ stroke: "none" }}
-                        ></path>
-                    </svg>
-                </div>
-            </section>
+                    <div className="waveWrapper waveAnimation">
+                        <svg viewBox="0 0 500 150" preserveAspectRatio="none">
+                            <path
+                                d="M-5.07,73.52 C149.99,150.00 299.66,-102.13 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"
+                                style={{ stroke: "none" }}
+                            ></path>
+                        </svg>
+                    </div>
+                </section>
             )}
 
-           <section className={`w3l-contact-1${embedded ? " contact-embedded" : " pb-5"}`} id="contact">
+            <section className={`w3l-contact-1${embedded ? " contact-embedded" : " pb-5"}`} id="contact">
                 <div className={embedded ? "contacts-9 py-3" : "contacts-9 py-lg-5 py-md-4"}>
                     <div className="container">
                         <div className="d-grid contact-view">
@@ -152,7 +151,7 @@ function Contact({ embedded = false }) {
                             <div className="cont-details">
                                 <h4 className="title-small">Get in touch</h4>
                                 <h3 className="title-big mb-4">Feel free to contact us</h3>
-                                <p className="mb-sm-5 mb-4" style={{cursor:"pointer"}}>
+                                <p className="mb-sm-5 mb-4" style={{ cursor: "pointer" }}>
                                     Start working with Us, We guarantee that you'll be able to
                                     have any issue resolved within 24 hours.
                                 </p>
@@ -162,8 +161,8 @@ function Contact({ embedded = false }) {
                                         <span className="fa fa-map-marker text-primary"></span>
                                     </div>
                                     <div className="cont-right">
-                                        <h6 style={{cursor:"context-menu"}}>Our head office address</h6>
-                                        <p className="pr-lg-5" style={{cursor:"context-menu"}}>
+                                        <h6 style={{ cursor: "context-menu" }}>Our head office address</h6>
+                                        <p className="pr-lg-5" style={{ cursor: "context-menu" }}>
                                             Study Course, 208 Trainer Avenue street, Illinois, UK - 62617.
                                         </p>
                                     </div>
@@ -173,7 +172,7 @@ function Contact({ embedded = false }) {
                                         <span className="fa fa-phone text-primary"></span>
                                     </div>
                                     <div className="cont-right">
-                                        <h6 style={{cursor:"context-menu"}}>Call for help</h6>
+                                        <h6 style={{ cursor: "context-menu" }}>Call for help</h6>
                                         <p>
                                             <a href="tel:+(21) 255 999 8888">+(21) 255 999 8888</a>
                                         </p>
@@ -184,11 +183,11 @@ function Contact({ embedded = false }) {
                                         <span className="fa fa-envelope-o text-primary"></span>
                                     </div>
                                     <div className="cont-right">
-                                        <h6 style={{cursor:"context-menu"}}>Contact with our support</h6>
+                                        <h6 style={{ cursor: "context-menu" }}>Contact with our support</h6>
                                         <p>
-                                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=raghavbhanot908@gmail.com" target="_blank">
-                                            raghavbhanot908@gmail.com
-                                           </a>
+                                            <a href="mailto:studycoursenotify@outlook.com">
+                                                studycoursenotify@outlook.com
+                                            </a>
                                         </p>
                                     </div>
                                 </div>
@@ -196,7 +195,7 @@ function Contact({ embedded = false }) {
 
                             {/* FORM */}
                             <div className="map-content-9">
-                                <h5 className="mb-sm-4 mb-3" style={{cursor:"context-menu"}}>Write to us</h5>
+                                <h5 className="mb-sm-4 mb-3" style={{ cursor: "context-menu" }}>Write to us</h5>
                                 <form onSubmit={handlesubmit} noValidate>
 
                                     {/* NAME + EMAIL */}
@@ -284,12 +283,12 @@ function Contact({ embedded = false }) {
                                     )}
 
                                     <div>
-                                        <br/>
-                                     <div 
-                                className="g-recaptcha" 
-                                data-sitekey={SITE_KEY}
-                            ></div>
-                            
+                                        <br />
+                                        <div
+                                            className="g-recaptcha"
+                                            data-sitekey={SITE_KEY}
+                                        ></div>
+
                                         <button
                                             type="submit"
                                             className="btn btn-primary btn-style mt-4"
@@ -317,22 +316,22 @@ function Contact({ embedded = false }) {
                         </div>
                     </div>
                 </div>
-               
+
                 {!embedded && (
                     <>
-                     <br /><br />
-                <div className="map-iframe">
-                    <iframe
-                        title="mapiframe"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d317718.69319292053!2d-0.3817765050863085!3d51.528307984912544!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52963a5addd52a99!2sLondon%2C+UK!5e0!3m2!1sen!2spl!4v1562654563739!5m2!1sen!2spl"
-                        width="100%"
-                        height="400"
-                        frameBorder="0"
-                        style={{ border: "0px" }}
-                        allowFullScreen=""
-                    ></iframe>
-                </div>
-                </>
+                        <br /><br />
+                        <div className="map-iframe">
+                            <iframe
+                                title="mapiframe"
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d317718.69319292053!2d-0.3817765050863085!3d51.528307984912544!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52963a5addd52a99!2sLondon%2C+UK!5e0!3m2!1sen!2spl!4v1562654563739!5m2!1sen!2spl"
+                                width="100%"
+                                height="400"
+                                frameBorder="0"
+                                style={{ border: "0px" }}
+                                allowFullScreen=""
+                            ></iframe>
+                        </div>
+                    </>
                 )}
             </section>
         </>
