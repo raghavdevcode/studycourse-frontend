@@ -66,7 +66,7 @@ function ActivateAccount() {
 
             if (resp?.data?.code === 1) {
                 toast.success("Activation mail sent! Link is valid for 15 minutes only.");
-            } 
+            }
         } catch (e) {
             console.error("API Error:", e);
         } finally {
@@ -82,6 +82,16 @@ function ActivateAccount() {
 
     return (
         <>
+          <style>{`
+            @keyframes spin {
+                from { transform: rotate(0deg); }
+                to   { transform: rotate(360deg); }
+            }
+            @keyframes pulseRing {
+                0%, 100% { transform: scale(0.85); opacity: 0.6; }
+                50%       { transform: scale(1.05); opacity: 0.2; }
+            }
+        `}</style>
             <section className="w3l-breadcrumb">
                 <div className="breadcrumb-bg breadcrumb-bg-about py-2  py-md-3 py-lg-4">
                     <div className="container pt-3 pb-5 p-lg-4 pt-lg-5">
@@ -109,12 +119,19 @@ function ActivateAccount() {
                                 {/* Loading */}
                                 {status === "loading" && (
                                     <>
-                                        <div style={{ ...iconStyle, background: "#f5f5f5", border: "1px solid #e0e0e0" }}>
-                                            <div className="spinner-border text-secondary"
-                                                style={{ width: "28px", height: "28px", borderWidth: "2.5px" }}
-                                                role="status">
-                                                <span className="visually-hidden">Loading...</span>
-                                            </div>
+                                        <div style={{
+                                            width: "80px", height: "80px", borderRadius: "50%",
+                                            background: "#E6F1FB",
+                                            display: "flex", alignItems: "center",
+                                            justifyContent: "center", margin: "0 auto 1.5rem",
+                                            animation: "pulseRing 2s ease-in-out infinite"
+                                        }}>
+                                            <div style={{
+                                                width: "56px", height: "56px", borderRadius: "50%",
+                                                border: "3px solid #e0e0e0",
+                                                borderTopColor: "#378ADD",
+                                                animation: "spin 0.9s linear infinite"
+                                            }} />
                                         </div>
                                         <h4>Activating your account...</h4>
                                         <p className="text-muted">Please wait while we verify your activation link.</p>
