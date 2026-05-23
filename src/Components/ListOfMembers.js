@@ -15,6 +15,7 @@ function ListOfMembers() {
 
     const [uinfo, setuinfo] = useState([]);
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
 
     const getallmembs = useCallback(async () => {
         try {
@@ -27,6 +28,8 @@ function ListOfMembers() {
         } catch (e) {
             console.error(e);
             toast.error(e?.response?.data?.message || e?.message || "Server not responding");
+        } finally {
+            setLoading(false);
         }
     }, []);
 
@@ -48,6 +51,12 @@ function ListOfMembers() {
             toast.error(e?.response?.data?.message || e?.message || "Server not responding");
         }
     }
+
+    if (loading) return (
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+            <div className="spinner-border text-primary" role="status"></div>
+        </div>
+    );
 
     return (
         <section className="mem-section">
@@ -95,7 +104,7 @@ function ListOfMembers() {
                                                         </button>
                                                     )}
                                                 </td>
-                                                
+
                                             </tr>
                                         ))}
                                     </tbody>
