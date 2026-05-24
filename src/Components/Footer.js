@@ -99,7 +99,7 @@ function Footer() {
 
         <section className="w3l-copyright text-center">
           <div className="container">
-            <p className="copy-footer-29" style={{ cursor: "context-menu" }}>© 2026 Study Course. All rights reserved. Design by <a href="https://github.com/codewithrb324"
+            <p className="copy-footer-29" style={{ cursor: "context-menu" }}>© 2026 Study Course. All rights reserved. Design by <a href="https://github.com/raghavdevcode"
               target="_blank" rel="noreferrer" className="footercopylink">
               Raghav Bhanot</a></p>
           </div>
