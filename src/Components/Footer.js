@@ -79,7 +79,7 @@ function Footer() {
 
                 {/* Social Media Links */}
                 <div className="footer-social-links mt-3">
-                  <a href="https://github.com/codewithrb324" target="_blank" rel="noreferrer" className="social-icon" title="Github">
+                  <a href="https://github.com/raghavdevcode" target="_blank" rel="noreferrer" className="social-icon" title="Github">
                     <i class="fa-brands fa-github"></i>
                   </a>
 
