@@ -15118,7 +15118,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .STUnav-label { display: block; }
 
   .STUnav-item {
-    padding: 9px 20px !important;
+    padding: 12px 20px !important;
+    font-size: 15px;
     justify-content: flex-start !important;
     gap: 10px !important;
   }
@@ -15126,7 +15127,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .STUlogo-icon{
      margin-left: 10% !important;
   }
-  .STUnav-icon { width: 16px; height: 16px; }
+  .STUnav-icon { width: 20px; height: 20px; }
 
   .STUuser-mini { flex-direction: row; gap: 10px; align-items: center; }
   .STUuser-mini-name,
@@ -15242,12 +15243,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .STUnav-label { display: block; }
 
   .STUnav-item {
-    padding: 9px 20px;
+    padding: 12px 20px;
+    font-size: 15px;
     justify-content: flex-start;
     gap: 10px;
   }
 
-  .STUnav-icon { width: 16px; height: 16px; }
+  .STUnav-icon { width: 20px; height: 20px; }
 
   .STUsidebar-footer { padding: 16px 20px 0; }
   .STUuser-mini { flex-direction: row; gap: 10px; align-items: center; }
