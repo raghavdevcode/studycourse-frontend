@@ -441,16 +441,7 @@ function StudentDashboard() {
             ))}
           </div>
         ))}
-
-        <div className="STUsidebar-footer" style={{ cursor: "context-menu" }}>
-          <div className="STUuser-mini">
-            <div className="STUavatar-sm">{initials}</div>
-            <div className="STUuser-mini-info">
-              <div className="STUuser-mini-name">{udata?.pname || "Student"}</div>
-              <div className="STUuser-mini-role">{udata?.utype || "user"}</div>
-            </div>
-          </div>
-        </div>
+        
       </aside>
 
       <div className="STUmain-content">
