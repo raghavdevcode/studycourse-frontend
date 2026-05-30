@@ -14816,8 +14816,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   display: flex; 
   align-items: center; 
   gap: 10px;
-  padding: 9px 20px;
-  font-size: 13px;
+  padding: 12px 20px;
+  font-size: 15px;
   color: var(--sidebarlogo-icons);
   width: 100%;
   text-align: left;
@@ -14842,7 +14842,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   border: none;
   box-shadow: none;
 }
-.STUnav-icon { width: 16px; height: 16px; opacity: 0.7; flex-shrink: 0; }
+.STUnav-icon { width: 20px; height: 20px; opacity: 0.7; flex-shrink: 0; }
 .STUnav-icon svg { width: 100%; height: 100%; }
 .STUnav-item.active .STUnav-icon,
 .STUnav-item:hover .STUnav-icon { opacity: 1; }
