@@ -21,7 +21,7 @@ const NAV = [
       { id: "overview", label: "Dashboard", icon: "grid" },
       { id: "courses", label: "My Courses", icon: "book" },
       { id: "explore", label: "Explore", icon: "search" },
-       { id: "contact", label: "Contact", icon: "mail" },
+      { id: "contact", label: "Contact", icon: "mail" },
     ],
   },
   {
@@ -43,8 +43,8 @@ const ICONS = {
   menu: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>,
   close: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>,
   lock: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0110 0v4" /></svg>,
-  mail: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0 1.1.9 2 2 2z"/><polyline points="22,6 12,13 2,6"/></svg>,
-  };
+  mail: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0 1.1.9 2 2 2z" /><polyline points="22,6 12,13 2,6" /></svg>,
+};
 
 const PAGE_TITLES = {
   overview: "Dashboard",
@@ -142,24 +142,24 @@ function Overview({ udata, onGoToCourses }) {
         gap: 16,
       }}>
         <div>
-          <p style={{ opacity: 0.85, fontSize: 14, margin: "0 0 4px", color: "#fff", cursor:"context-menu" }}>Welcome back,</p>
-          <h2 style={{ fontSize: 22, fontWeight: 700, margin: "0 0 6px", color: "#fff", cursor:"context-menu" }}>
+          <p style={{ opacity: 0.85, fontSize: 14, margin: "0 0 4px", color: "#fff", cursor: "context-menu" }}>Welcome back,</p>
+          <h2 style={{ fontSize: 22, fontWeight: 700, margin: "0 0 6px", color: "#fff", cursor: "context-menu" }}>
             {udata?.pname || "Student"}
           </h2>
-          <p style={{ opacity: 0.75, fontSize: 13, margin: 0, color: "#fff", cursor:"context-menu" }}>{udata?.uname}</p>
+          <p style={{ opacity: 0.75, fontSize: 13, margin: 0, color: "#fff", cursor: "context-menu" }}>{udata?.uname}</p>
         </div>
         <div style={{
           width: 64, height: 64, borderRadius: "50%",
           background: "rgba(255,255,255,0.2)",
           display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: 24, fontWeight: 700, color: "#fff", flexShrink: 0, cursor:"context-menu"
+          fontSize: 24, fontWeight: 700, color: "#fff", flexShrink: 0, cursor: "context-menu"
         }}>
           {initials}
         </div>
       </div>
 
       {/* Account Info Cards */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 14 , cursor:"context-menu" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 14, cursor: "context-menu" }}>
         {[
           { label: "Account Type", value: udata?.utype || "—", color: "#4f63ff" },
           { label: "Status", value: "Active", color: "#10b981" },
@@ -177,7 +177,7 @@ function Overview({ udata, onGoToCourses }) {
       </div>
 
       {/* ===== PROGRESS SECTION ===== */}
-      <div style={{cursor:"context-menu"}}>
+      <div style={{ cursor: "context-menu" }}>
         <h3 style={{ margin: "0 0 12px", fontSize: 16, fontWeight: 700 }}>📊 My Progress</h3>
 
         {loading ? (
@@ -300,25 +300,25 @@ function StudentDashboard() {
     ? udata.pname.split(" ").map((w) => w[0]).join("").toUpperCase().slice(0, 2)
     : "SC";
 
-async function handleNav(id) {
-  if (id === "logout") {
-    try {
-      await api.post("/api/auth/logout");
+  async function handleNav(id) {
+    if (id === "logout") {
+      try {
+        await api.post("/api/auth/logout");
 
-      dispatch(logout()); 
-      sessionStorage.clear();
-      localStorage.clear();
+        dispatch(logout());
+        sessionStorage.clear();
+        localStorage.clear();
 
-      toast.success("Logged out successfully!");
-      navigate("/login");
-    } catch (err) {
-      toast.error(err.customMessage || "Logout failed");
+        toast.success("Logged out successfully!");
+        navigate("/login");
+      } catch (err) {
+        toast.error(err.customMessage || "Logout failed");
+      }
+      return;
     }
-    return;
-  }
 
-  setPage(id);
-}
+    setPage(id);
+  }
 
   function renderPage() {
     switch (page) {
@@ -442,7 +442,7 @@ async function handleNav(id) {
           </div>
         ))}
 
-        <div className="STUsidebar-footer" style={{cursor:"context-menu"}}>
+        <div className="STUsidebar-footer" style={{ cursor: "context-menu" }}>
           <div className="STUuser-mini">
             <div className="STUavatar-sm">{initials}</div>
             <div className="STUuser-mini-info">
@@ -464,10 +464,16 @@ async function handleNav(id) {
             </nav>
           </div>
 
-          <div className="STUtopbar-user">
+          <div
+            className="STUtopbar-user"
+            onClick={() => setPage("profile")}
+            style={{ cursor: "pointer" }}
+            title="View Profile"
+          >
             <div className="STUavatar-sm sm">{initials}</div>
             <span className="STUtopbar-username">{udata?.pname?.split(" ")[0] || "Student"}</span>
           </div>
+
         </header>
 
         <main className="STUscroll-area" style={{ flex: 1, overflowY: "auto", padding: "24px" }}>
