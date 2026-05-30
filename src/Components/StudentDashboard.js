@@ -471,7 +471,6 @@ function StudentDashboard() {
             title="View Profile"
           >
             <div className="STUavatar-sm sm">{initials}</div>
-            <span className="STUtopbar-username">{udata?.pname?.split(" ")[0] || "Student"}</span>
           </div>
 
         </header>
