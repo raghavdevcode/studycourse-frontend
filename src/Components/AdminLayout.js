@@ -4,6 +4,7 @@ import api from "../api/api";
 import ThemeToggle from "./ThemeToggle";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../reducers/userReducer";
+import { toast } from "react-toastify";
 
 const menuItems = [
   { icon: "🏠", label: "Dashboard", path: "/adminlayout" },
