@@ -85,27 +85,24 @@ function AdminLayout() {
 
 
 async function handlelogout() {
-
   try {
-
     await api.post("/api/auth/logout", {}, {
       skipErrorToast: true
     });
 
-  }
-  catch (e) {
+    dispatch(logout());
 
+    sessionStorage.clear();
+    localStorage.clear();
+
+    toast.success("Logged out successfully");
+
+    navigate("/homepage");
+
+  } catch (e) {
     console.error(e);
-
+    toast.error("Logout failed");
   }
-
-  dispatch(logout());
-
-  sessionStorage.clear();
-
-  localStorage.clear();
-
-  navigate("/homepage");
 }
 
 
