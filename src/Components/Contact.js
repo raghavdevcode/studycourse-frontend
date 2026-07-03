@@ -185,8 +185,8 @@ function Contact({ embedded = false }) {
                                     <div className="cont-right">
                                         <h6 style={{ cursor: "context-menu" }}>Contact with our support</h6>
                                         <p>
-                                            <a href="mailto:studycoursenotify@outlook.com">
-                                                studycoursenotify@outlook.com
+                                            <a href="mailto:raghavbhanot908@gmail.com">
+                                                raghavbhanot908@gmail.com
                                             </a>
                                         </p>
                                     </div>

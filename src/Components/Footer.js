@@ -44,8 +44,8 @@ function Footer() {
                 <h6 className="footer-title-29">Contact Info </h6>
                 <p style={{ cursor: "pointer" }}>Address : Study course, 343 marketing, #2214 cravel street, NY - 62617.</p>
                 <p className="my-2">Phone : <a href="tel:+1(21) 234 4567">+1(21) 234 4567</a></p>
-                <p>Email :   <a href="mailto:studycoursenotify@outlook.com">
-                  studycoursenotify@outlook.com
+                <p>Email :   <a href="mailto:raghavbhanot908@gmail.com">
+                  raghavbhanot908.com
                 </a></p>
 
               </div>
