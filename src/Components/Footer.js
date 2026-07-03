@@ -45,7 +45,7 @@ function Footer() {
                 <p style={{ cursor: "pointer" }}>Address : Study course, 343 marketing, #2214 cravel street, NY - 62617.</p>
                 <p className="my-2">Phone : <a href="tel:+1(21) 234 4567">+1(21) 234 4567</a></p>
                 <p>Email :   <a href="mailto:raghavbhanot908@gmail.com">
-                  raghavbhanot908.com
+                  raghavbhanot908@gmail.com
                 </a></p>
 
               </div>
