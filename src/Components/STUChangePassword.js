@@ -1,6 +1,5 @@
 import api from "../api/api";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { logout } from "../reducers/userReducer";
@@ -11,7 +10,6 @@ function STUChangePassword() {
         document.title = "Change Password - Study Course";
     }, []);
 
-    const udata = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);

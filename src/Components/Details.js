@@ -1,5 +1,5 @@
 import api from "../api/api";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -14,8 +14,14 @@ function VideoModal({ youtubeId, onClose, onWatchComplete }) {
   const player = useRef(null);
   const watchCompleted = useRef(false);
   const intervalRef = useRef(null);
+  const onWatchCompleteRef = useRef(onWatchComplete);
 
-  function startProgressTracking() {
+  // keep latest onWatchComplete without retriggering the player effect
+  useEffect(() => {
+    onWatchCompleteRef.current = onWatchComplete;
+  }, [onWatchComplete]);
+
+  const startProgressTracking = useCallback(() => {
     if (intervalRef.current) clearInterval(intervalRef.current);
 
     intervalRef.current = setInterval(() => {
@@ -34,11 +40,11 @@ function VideoModal({ youtubeId, onClose, onWatchComplete }) {
         if (percent >= 90 && !watchCompleted.current) {
           watchCompleted.current = true;
           clearInterval(intervalRef.current);
-          onWatchComplete?.();
+          onWatchCompleteRef.current?.();
         }
       } catch { }
     }, 5000);
-  }
+  }, []);
 
   useEffect(() => {
     const initPlayer = () => {
@@ -58,7 +64,7 @@ function VideoModal({ youtubeId, onClose, onWatchComplete }) {
               clearInterval(intervalRef.current);
               if (!watchCompleted.current) {
                 watchCompleted.current = true;
-                onWatchComplete?.();
+                onWatchCompleteRef.current?.();
               }
             }
           },
@@ -77,7 +83,7 @@ function VideoModal({ youtubeId, onClose, onWatchComplete }) {
       if (intervalRef.current) clearInterval(intervalRef.current);
       player.current?.destroy();
     };
-  }, [youtubeId]);
+  }, [youtubeId, startProgressTracking]);
 
   const handleBack = () => {
     player.current?.seekTo(player.current.getCurrentTime() - 10, true);
@@ -194,30 +200,30 @@ function Details({ lessonId, onBack }) {
   const isLocked = courseinfo?.isLocked;
   const subcatId = courseinfo?.subcatId;
 
-function handleWatchNow() {
+  function handleWatchNow() {
 
-  // If lesson not locked — free preview runs without login
-  if (!isLocked) {
-    if (youtubeId) setShowModal(true);
-    else toast.warn("Video not available");
-    return;
+    // If lesson not locked — free preview runs without login
+    if (!isLocked) {
+      if (youtubeId) setShowModal(true);
+      else toast.warn("Video not available");
+      return;
+    }
+
+    // Locked lesson — first login check
+    if (!udata?.isLoggedIn) {
+      toast.warn("Please login to enroll");
+      sessionStorage.setItem("lid", courseid);
+      navigate("/login");
+      return;
+    }
+
+    // If Logged in  but not enrolled  — redirect to payment page
+    navigate(
+      `/payment?scid=${subcatId}&name=${encodeURIComponent(
+        courseinfo?.subcatName || "Course"
+      )}`
+    );
   }
-
-  // Locked lesson — first login check
-  if (!udata?.isLoggedIn) {
-    toast.warn("Please login to enroll");
-    sessionStorage.setItem("lid", courseid);
-    navigate("/login");
-    return;
-  }
-
-  // If Logged in  but not enrolled  — redirect to payment page
-  navigate(
-    `/payment?scid=${subcatId}&name=${encodeURIComponent(
-      courseinfo?.subcatName || "Course"
-    )}`
-  );
-}
 
   async function markAsWatched() {
     try {
@@ -232,26 +238,26 @@ function handleWatchNow() {
     }
   }
 
-async function checkIfWatched() {
+  const checkIfWatched = useCallback(async () => {
     try {
-        const res = await api.get("/api/progress/get");
-        if (res.data.code === 1) {
-            const watched = res.data.progressData || [];
-            const isWatched = watched.some(p => 
-                p.lessonId?.toString() === courseid?.toString() 
-            );
-            
-            setAlreadyMarked(isWatched);
-        }
+      const res = await api.get("/api/progress/get");
+      if (res.data.code === 1) {
+        const watched = res.data.progressData || [];
+        const isWatched = watched.some(
+          (p) => p.lessonId?.toString() === courseid?.toString()
+        );
+
+        setAlreadyMarked(isWatched);
+      }
     } catch (e) {
-        console.error(e);
+      console.error(e);
     }
-}
-  async function fetchcoursedetails() {
+  }, [courseid]);
+
+  const fetchcoursedetails = useCallback(async () => {
     try {
       const res = await api.get(
         `/api/lesson/getone/${courseid}`
-        
       );
 
       if (res?.data?.code === 1) setcourseinfo(res.data.coursedata);
@@ -259,21 +265,21 @@ async function checkIfWatched() {
     } catch {
       setNotFound(true);
     }
-    finally{
+    finally {
       setLoading(false)
     }
-  }
+  }, [courseid]);
 
-  async function fetchComments() {
+  const fetchComments = useCallback(async () => {
     try {
       const res = await api.get(
-       `/api/comment/get?lessonId=${courseid}`
+        `/api/comment/get?lessonId=${courseid}`
       );
       if (res?.data?.code === 1) setComments(res.data.comments || []);
     } catch (e) {
       console.error(e);
     }
-  }
+  }, [courseid]);
 
   async function handleAddComment() {
     if (!commentText.trim()) return toast.warn("Write something");
@@ -313,25 +319,25 @@ async function checkIfWatched() {
     if (!courseid || !isValidObjectId(courseid)) return setNotFound(true);
     fetchcoursedetails();
     fetchComments();
-     if (udata?.isLoggedIn) checkIfWatched();
-  }, [courseid,udata]);
+    if (udata?.isLoggedIn) checkIfWatched();
+  }, [courseid, udata, fetchcoursedetails, fetchComments, checkIfWatched]);
 
   useEffect(() => {
     document.body.style.overflow = showModal ? "hidden" : "auto";
   }, [showModal]);
 
   if (notFound) return <ErrorPage />;
-  
-    if (loading) return  <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh"
-        }}
-      >
-        <div className="spinner-border text-primary" role="status"></div>
-      </div>;
+
+  if (loading) return <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "100vh"
+    }}
+  >
+    <div className="spinner-border text-primary" role="status"></div>
+  </div>;
   return (
     <>
       {showModal && youtubeId && (
@@ -358,6 +364,7 @@ async function checkIfWatched() {
             <img
               src={`${process.env.REACT_APP_APIURL}/uploads/${courseinfo.thumbnail}`}
               onClick={handleWatchNow}
+              alt={courseinfo.title || "Course thumbnail"}
               style={{
                 cursor: "pointer",
                 filter: isLocked ? "brightness(0.3)" : "none",
@@ -384,17 +391,17 @@ async function checkIfWatched() {
           </div>
 
           <div className="course-info">
-           <h1 style={{cursor:"context-menu"}}>{courseinfo.title}</h1>
-            <p style={{cursor:"pointer"}}>{courseinfo.description}</p>
+            <h1 style={{ cursor: "context-menu" }}>{courseinfo.title}</h1>
+            <p style={{ cursor: "pointer" }}>{courseinfo.description}</p>
 
-            <h3 style={{ color: "#f8f8fc", cursor:"context-menu" }}>Duration: {courseinfo.duration}</h3>
+            <h3 style={{ color: "#f8f8fc", cursor: "context-menu" }}>Duration: {courseinfo.duration}</h3>
 
             {isLocked ? (
               <>
-              <br/>
-              <button onClick={handleWatchNow} className="enroll-btn">
-                💳 Enroll Now — ₹499
-              </button>
+                <br />
+                <button onClick={handleWatchNow} className="enroll-btn">
+                  💳 Enroll Now — ₹499
+                </button>
               </>
             ) : (
               <>
@@ -437,9 +444,9 @@ async function checkIfWatched() {
               <div>
                 <strong>{c.username}</strong>
                 <p className="comment-color" style={{ margin: "5px 0" }}>{c.comment}</p>
-                 <small style={{ color: "#aaa", fontSize: "0.75rem" }}>
-    {convertUTCtoIST(c.createdAt)}
-  </small>
+                <small style={{ color: "#aaa", fontSize: "0.75rem" }}>
+                  {convertUTCtoIST(c.createdAt)}
+                </small>
               </div>
               {(c.userId === udata.uid || udata.utype === "admin") && (
                 <button

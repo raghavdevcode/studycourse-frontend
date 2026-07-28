@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { getAllSubCategoriesApi } from "../api/subCategoryApi";
-import { useSelector } from "react-redux";
 
 const fadeImages = [
     {
@@ -41,7 +40,6 @@ function getIsMobile() {
 function Home() {
     const [subcatdata, setSubcatData] = useState([]);
     const [loading, setLoading] = useState(true);
-    const udata = useSelector((state) => state.auth);
     const [isMobile, setIsMobile] = useState(getIsMobile);
     const abortRef = useRef(null);
 
@@ -123,7 +121,7 @@ function Home() {
             <section className="w3l-main-slider" id="home">
                 <div className="companies20-content">
                     <div className="slide-container" style={{ position: 'relative' }}>
-                        <Fade duration={3000} transitionDuration={600} infinite={true} arrows={true}>
+                        <Fade duration={3000} transitionDuration={600} infinite={true} arrows={!isMobile}>
                             {fadeImages.map((slide, index) => (
                                 <div key={index} style={{ position: 'relative' }}>
                                     <img

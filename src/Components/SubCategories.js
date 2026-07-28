@@ -1,5 +1,5 @@
 import api from "../api/api";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";  // useSearchParams add karo
 import { toast } from "react-toastify";
 import ErrorPage from "./ErrorPage";
@@ -14,7 +14,8 @@ function SubCategories({ catId, onBack, onSubCatClick }) {
     const [subcatdata, setsubcatdata] = useState([]);
     const [notFound, setNotFound] = useState(false);
     const [loading, setLoading] = useState(true);
-    async function fetchsubcatbycat() {
+
+    const fetchsubcatbycat = useCallback(async () => {
         try {
             const apiresp = await api.get(`/api/subcategory/bycat?cid=${catid}`);
             if (apiresp.data.code === 1) {
@@ -29,7 +30,7 @@ function SubCategories({ catId, onBack, onSubCatClick }) {
         finally {
             setLoading(false);
         }
-    }
+    }, [catid]);
 
     useEffect(() => {
         document.title = "Sub Categories - Study Course";
@@ -41,7 +42,7 @@ function SubCategories({ catId, onBack, onSubCatClick }) {
             return;
         }
         fetchsubcatbycat();
-    }, [catid]);
+    }, [catid, fetchsubcatbycat]);
 
     if (notFound) return <ErrorPage />;
     

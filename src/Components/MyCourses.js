@@ -36,7 +36,7 @@ useEffect(() => {
     return;
   }
   fetchEnrolledCourses();
-}, [udata?.isLoggedIn]);
+}, [udata?.isLoggedIn, navigate]);
 
   useEffect(() => {
     document.title = "My Courses - Study Course";

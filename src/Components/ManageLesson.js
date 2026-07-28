@@ -259,7 +259,7 @@ function ManageLesson() {
 
     useEffect(() => {
         fetchCategories();
-    }, []);
+    }, [fetchCategories]);
 
 
     return (

@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import useFetchCategories from "../hooks/useFetchCategories";
 
@@ -31,7 +30,7 @@ function Footer() {
 
   useEffect(() => {
     fetchCategories();
-  }, []);
+  }, [fetchCategories]);
 
 
   return (
@@ -80,7 +79,7 @@ function Footer() {
                 {/* Social Media Links */}
                 <div className="footer-social-links mt-3">
                   <a href="https://github.com/raghavdevcode" target="_blank" rel="noreferrer" className="social-icon" title="Github">
-                    <i class="fa-brands fa-github"></i>
+                    <i className="fa-brands fa-github"></i>
                   </a>
 
                   <a href="https://instagram.com" target="_blank" rel="noreferrer" className="social-icon" title="Instagram">

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ErrorPage from "./ErrorPage";
 import { Link, useSearchParams } from "react-router-dom";
 import api from "../api/api";
@@ -11,7 +11,7 @@ function SearchResults() {
   const [searched, setSearched] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  async function searchAll() {
+  const searchAll = useCallback(async () => {
     try {
       const apiresp = await api.get(`/api/searchcourses?s=${stext}`);
       if (apiresp.data.code === 1) {
@@ -28,7 +28,7 @@ function SearchResults() {
       setSearched(true);
       setLoading(false)
     }
-  }
+  }, [stext]);
 
 
   useEffect(() => {
@@ -41,7 +41,7 @@ function SearchResults() {
 
     setSearched(false);
     searchAll();
-  }, [stext]);
+  }, [stext, searchAll]);
 
    if (loading) return  <div
         style={{
@@ -88,6 +88,7 @@ function SearchResults() {
                       <Link to={`/lessons?scid=${data._id}`}>
                         <img
                           src={`${process.env.REACT_APP_APIURL}/uploads/${data.picname}`}
+                          alt={data.subcatname}
                           className="img-fluid"
                         />
                         <p className="category-p">{data.subcatname}</p>

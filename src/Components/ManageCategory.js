@@ -87,7 +87,7 @@ function ManageCategory() {
 
     useEffect(() => {
         fetchCategories?.();
-    }, []);
+    }, [fetchCategories]);
 
     function updateCategory(cdata) {
         seteditmode(true);

@@ -1,5 +1,5 @@
 import api from "../api/api";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { toast } from "react-toastify";
 import useFetchCategories from "../hooks/useFetchCategories";
 
@@ -22,6 +22,26 @@ function ManageSubCategory() {
 
     const [catidError, setcatidError] = useState("");
     const [scnameError, setscnameError] = useState("");
+
+    const fetchsubcatbycat = useCallback(async () => {
+        try {
+            const apiresp = await api.get(`/api/subcategory/bycat?cid=${catid}`)
+
+            if (apiresp?.data?.code === 1) {
+                setsubcatdata(apiresp.data.scdata);
+            } else {
+                toast.info("No sub categories found");
+                setsubcatdata([]);
+            }
+        } catch (e) {
+            const msg =
+                e?.response?.data?.message ||
+                e?.message ||
+                "Something went wrong";
+
+            toast.error(msg);
+        }
+    }, [catid]);
 
     async function handlesubmit(e) {
         e.preventDefault();
@@ -103,7 +123,7 @@ function ManageSubCategory() {
 
     useEffect(() => {
         fetchCategories?.();
-    }, []);
+    }, [fetchCategories]);
 
     function updateSubCategory(scdata) {
         seteditmode(true);
@@ -150,31 +170,12 @@ function handlecancel() {
         fileref.current.value = "";
     }
 }
-    async function fetchsubcatbycat() {
-        try {
-            const apiresp = await api.get(`/api/subcategory/bycat?cid=${catid}`)
-
-            if (apiresp?.data?.code === 1) {
-                setsubcatdata(apiresp.data.scdata);
-            } else {
-                toast.info("No sub categories found");
-                setsubcatdata([]);
-            }
-        } catch (e) {
-            const msg =
-                e?.response?.data?.message ||
-                e?.message ||
-                "Something went wrong";
-
-            toast.error(msg);
-        }
-    }
 
     useEffect(() => {
         if (catid !== null) {
             fetchsubcatbycat();
         }
-    }, [catid]);
+    }, [catid, fetchsubcatbycat]);
 
     return (
         <>

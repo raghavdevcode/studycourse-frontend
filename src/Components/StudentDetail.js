@@ -1,5 +1,5 @@
 import api from "../api/api";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -16,12 +16,7 @@ function StudentDetail() {
     const [courseProgress, setCourseProgress] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        document.title = "Student Detail - Study Course";
-        fetchAllData();
-    }, [userId]);
-
-    async function fetchAllData() {
+    const fetchAllData = useCallback(async () => {
         setLoading(true);
         try {
             const [userRes, enrollRes, progressRes] = await Promise.all([
@@ -39,7 +34,12 @@ function StudentDetail() {
         } finally {
             setLoading(false);
         }
-    }
+    }, [userId]);
+
+    useEffect(() => {
+        document.title = "Student Detail - Study Course";
+        fetchAllData();
+    }, [userId, fetchAllData]);
 
     if (loading) {
         return (
