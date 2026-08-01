@@ -60,13 +60,6 @@ function AppContent() {
 
   }, [dispatch]);
 
-    // wake up backend (optional, extra safety)
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_APIURL}/health`)
-      .then(() => console.log("Backend awake ho gaya!"))
-      .catch((err) => console.log("Waking up backend...", err));
-  }, []);
-
   if (loading) {
 
     return (
